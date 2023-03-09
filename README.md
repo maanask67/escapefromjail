@@ -13,3 +13,5 @@ Max Players:
 
 Map: There are several stages in the Prison of Guantanamo. At every stage you must reach the elevator or the stairs to get to the next one and hope to escape. The stages are constructed as randomly generated mazes.
 
+The game will be top down and have limited vision.
+
