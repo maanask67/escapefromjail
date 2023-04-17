@@ -1,15 +1,26 @@
+import com.sun.javafx.geom.Rectangle;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 //Player class, just an idea currently, not complete
 public class Player {
     private final double speed = 5;
-    private final Rectangle playerRect;
+    double x;
+    double y;
 
-    public Player(double x, double y, double width, double height) {
-        playerRect = new Rectangle(x, y, width, height);
+    public Player(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
-    public Node getNode() {
+    /* private final Rectangle playerRect;
+
+    public Player(double x, double y, double width, double height) {
+        playerRect = new Rectangle((int)x,(int) y, (int)width, (int) height);
+    }
+
+    public Rectangle getNode() {
         return playerRect;
     }
 
@@ -39,7 +50,7 @@ public class Player {
 
     private void handleKeyReleased(KeyEvent event) {
         // Handle key released events if needed
-    }
+    }*/
 }
 
 
