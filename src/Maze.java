@@ -7,6 +7,9 @@ import java.util.List;
 public class Maze {
     List<Tiles> listOfTiles = new ArrayList<Tiles>();
 
+    public List<Tiles> getListOfTiles() {
+        return listOfTiles;
+    }
     public Maze(String fileName) {
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
