@@ -1,9 +1,11 @@
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -14,6 +16,7 @@ public class Riddle extends VBox {
     private String question;
     private String[] answer = new String[4];
     private int rightAnswer;
+    private int selectedAnswer = 1; // currently selected answer
 
     Label questionLabel = new Label();
 
@@ -22,6 +25,8 @@ public class Riddle extends VBox {
     public Riddle() {
         super();
         initLayout();
+        setFocusTraversable(true); // enable focus traversal for the VBox
+        setOnKeyPressed(event -> handleKeyPress(event.getCode())); // handle key presses
     }
 
     public Riddle(String question, String[] answer, int rightAnswer) {
@@ -37,9 +42,24 @@ public class Riddle extends VBox {
             this.answerLabels.add(label);
             label.setText(answer[i]);
             label.setFont(Font.font(18));
+
+            // add hover effect using CSS background color
+            label.setOnMouseEntered(e -> {
+                if (label != answerLabels.get(selectedAnswer)) {
+                    label.setStyle("-fx-background-color: #E0E0E0;");
+                }
+            });
+
+            label.setOnMouseExited(e -> {
+                if (label != answerLabels.get(selectedAnswer)) {
+                    label.setStyle("-fx-background-color: transparent;");
+                }
+            });
         }
 
         initLayout();
+        setFocusTraversable(true); // enable focus traversal for the VBox
+        setOnKeyPressed(event -> handleKeyPress(event.getCode())); // handle key presses
     }
 
     private void initLayout() {
@@ -57,38 +77,53 @@ public class Riddle extends VBox {
             // add event handler to label
             label.setOnMouseClicked(event -> {
                 int index = answerLabels.indexOf(label);
-                if (index == rightAnswer) {
-                    // create new label to display "CORRECT!"
-                    Label resultLabel = new Label("CORRECT!");
-                    resultLabel.setFont(Font.font(24));
-                    resultLabel.setVisible(false);
-                    this.getChildren().add(resultLabel);
-
-                    // hide the question and answer labels and show the result label
-                    questionLabel.setVisible(false);
-                    answerBox.setVisible(false);
-                    resultLabel.setVisible(true);
-                } else {
-                    // create new label to display "INCORRECT!"
-                    Label resultLabel = new Label("INCORRECT!");
-                    resultLabel.setFont(Font.font(24));
-                    resultLabel.setVisible(false);
-                    this.getChildren().add(resultLabel);
-
-                    // hide the question and answer labels and show the result label
-                    questionLabel.setVisible(false);
-                    answerBox.setVisible(false);
-                    resultLabel.setVisible(true);
-                }
+                processAnswer(index);
             });
-        }
 
-        answerBox.getChildren().addAll(answerLabels);
+            // add label to answerBox
+            answerBox.getChildren().add(label);
+        }
 
         this.getChildren().add(questionLabel);
         this.getChildren().add(answerBox);
     }
 
+    private void handleKeyPress(KeyCode keyCode) {
+        if (keyCode == KeyCode.LEFT) {
+            // move selection up
+            if (selectedAnswer > 0) {
+                answerLabels.get(selectedAnswer).setStyle("-fx-background-color: transparent;");
+                selectedAnswer--;
+                updateSelectedAnswer();
+            }
+        } else if (keyCode == KeyCode.RIGHT) {
+            // move selection down
+            if (selectedAnswer < answerLabels.size() - 1) {
+                answerLabels.get(selectedAnswer).setStyle("-fx-background-color: transparent;");
+                selectedAnswer++;
+                updateSelectedAnswer();
+            }
+        } else if (keyCode == KeyCode.ENTER) {
+            // submit selected answer
+            if (selectedAnswer >= 0) {
+                processAnswer(selectedAnswer);
+            }
+        }
+    }
 
+    private void updateSelectedAnswer() {
+        // update the style of the selected answer label
+        answerLabels.get(selectedAnswer).setStyle("-fx-background-color: #E0E0E0;");
+    }
+
+    private void processAnswer(int index) {
+        // process the selected answer
+        if (index == rightAnswer) {
+            System.out.println("Correct!");
+        } else {
+            System.out.println("Incorrect!");
+        }
+    }
 }
+
 
