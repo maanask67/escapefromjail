@@ -1,13 +1,14 @@
 import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class GraphicalEngine {
-    Maze maze;
-    Camera camera;
-    Group group;
-    Player hero;
+    private final Maze maze;
+    private final Camera camera;
+    private final Group group;
+    private final Player hero;
 
     public GraphicalEngine(Maze maze, Camera camera, Group group, Player hero) {
         this.maze = maze;
@@ -16,20 +17,31 @@ public class GraphicalEngine {
         this.hero = hero;
     }
 
-    public void render(long time){
-        Rectangle background = new Rectangle(0,0,400,160);
-        background.setFill(Color.WHITE);
-        group.getChildren().add(background);
-        for (Tiles tiles : maze.listOfTiles){
-            group.getChildren().add(new Rectangle(tiles.getXPosition()-camera.getxPosition(),
-                    tiles.getYPosition()-camera.getyPosition(),20,20));
+    public void render(long time) {
+        group.getChildren().clear();
+
+        ImageView backgroundImage = new ImageView(new Image("file:./ressources/jail.jpg"));
+        backgroundImage.setFitWidth(400);
+        backgroundImage.setFitHeight(160);
+        group.getChildren().add(backgroundImage);
+
+        for (Tiles tile : maze.getListOfTiles()) {
+            Rectangle tileRect = new Rectangle(
+                    tile.getXPosition() - camera.getxPosition(),
+                    tile.getYPosition() - camera.getyPosition(),
+                    20, 20);
+            tileRect.setFill(tile.getColor());
+            group.getChildren().add(tileRect);
         }
 
-        Rectangle heroRectangle =new Rectangle(hero.x-camera.getxPosition(),
-                hero.y-camera.getyPosition(),20,20);
-        heroRectangle.setFill(Color.BLUE);
-        group.getChildren().add(heroRectangle);
-
+        ImageView heroImage = new ImageView(new Image("file:./ressources/prisoner.png"));
+        heroImage.setPreserveRatio(false); // Set preserveRatio to false
+        heroImage.setSmooth(true); // Set smooth rendering to true
+        heroImage.setX(hero.x - camera.getxPosition());
+        heroImage.setY(hero.y - camera.getyPosition());
+        heroImage.setFitWidth(20);
+        heroImage.setFitHeight(20);
+        group.getChildren().add(heroImage);
 
     }
 }

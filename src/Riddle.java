@@ -1,4 +1,7 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -8,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +22,15 @@ public class Riddle extends VBox {
     private int rightAnswer;
     private int selectedAnswer = 1; // currently selected answer
 
+    private int[] timerValueRef;
+
     Label questionLabel = new Label();
+
+    Label correctLabel = new Label("CORRECT!");
+
+    Label incorrectLabel = new Label("INCORRECT!");
+
+    Label timerLabel = new Label();
 
     List<Label> answerLabels = new ArrayList<>();
 
@@ -29,10 +41,12 @@ public class Riddle extends VBox {
         setOnKeyPressed(event -> handleKeyPress(event.getCode())); // handle key presses
     }
 
-    public Riddle(String question, String[] answer, int rightAnswer) {
+    public Riddle(String question, String[] answer, int rightAnswer, int[] timerValueRef) {
         this.question = question;
         this.answer = answer;
         this.rightAnswer = rightAnswer;
+        this.timerLabel = timerLabel;
+        this.timerValueRef = timerValueRef;
 
         questionLabel.setText(question);
         questionLabel.setFont(Font.font(24));
@@ -63,6 +77,8 @@ public class Riddle extends VBox {
     }
 
     private void initLayout() {
+        correctLabel.setVisible(false);
+        incorrectLabel.setVisible(false);
         // create HBox layout manager for answer labels
         HBox answerBox = new HBox();
         answerBox.setSpacing(10);
@@ -84,6 +100,8 @@ public class Riddle extends VBox {
             answerBox.getChildren().add(label);
         }
 
+        this.getChildren().add(correctLabel);
+        this.getChildren().add(incorrectLabel);
         this.getChildren().add(questionLabel);
         this.getChildren().add(answerBox);
     }
@@ -119,9 +137,43 @@ public class Riddle extends VBox {
     private void processAnswer(int index) {
         // process the selected answer
         if (index == rightAnswer) {
-            System.out.println("Correct!");
-        } else {
-            System.out.println("Incorrect!");
+
+            // Remove the question and answer labels
+            questionLabel.setVisible(false);
+            answerLabels.forEach(label -> label.setVisible(false));
+            correctLabel.setFont(Font.font(32));
+            correctLabel.setTextFill(Color.GREEN);
+            correctLabel.setVisible(true);
+
+
+
+            // Close the riddle Pane after a delay
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
+                Stage stage = (Stage) getScene().getWindow();
+                stage.close();
+            }));
+            timeline.setDelay(Duration.seconds(.50));
+            timeline.play();
+        }
+        else {
+            questionLabel.setVisible(false);
+            answerLabels.forEach(label -> label.setVisible(false));
+            incorrectLabel.setFont(Font.font(32));
+            incorrectLabel.setTextFill(Color.RED);
+            incorrectLabel.setVisible(true);
+
+            timerValueRef[0] -= 10;
+
+            timerLabel.setText("Timer: " + timerValueRef[0]);
+
+
+            // Close the riddle Pane after a delay
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
+                Stage stage = (Stage) getScene().getWindow();
+                stage.close();
+            }));
+            timeline.setDelay(Duration.seconds(.5));
+            timeline.play();
         }
     }
 }

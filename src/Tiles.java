@@ -1,23 +1,30 @@
 import javafx.geometry.Rectangle2D;
+import javafx.scene.paint.Color;
 
 public class Tiles {
-    private final int XPosition;
-    private final int YPosition;
+    private final int xPosition;
+    private final int yPosition;
+    private final Color color;
 
-    public Tiles(int XPosition, int YPosition) {
-        this.XPosition = XPosition;
-        this.YPosition = YPosition;
+    public Tiles(int xPosition, int yPosition, Color color) {
+        this.xPosition = xPosition;
+        this.yPosition = yPosition;
+        this.color = color;
     }
 
     public int getXPosition() {
-        return XPosition;
+        return xPosition;
     }
 
     public int getYPosition() {
-        return YPosition;
+        return yPosition;
     }
 
-    public Rectangle2D getBoundingBox(){
-        return new Rectangle2D(XPosition,YPosition,20,20);
+    public Color getColor() {
+        return color;
+    }
+
+    public Rectangle2D getBoundingBox() {
+        return new Rectangle2D(xPosition, yPosition, 20, 20);
     }
 }
