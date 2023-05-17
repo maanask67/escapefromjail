@@ -36,7 +36,7 @@ public class GUI extends Application {
         Group questionGroup = new Group();
         Scene questionScene = new Scene(questionGroup);
         graphicalEngine = new GraphicalEngine(maze, camera, root, hero);
-        physicalEngine = new PhysicalEngine(hero, maze, questionStage);
+        physicalEngine = new PhysicalEngine(hero, maze, questionStage, timerValueRef);
         pane = new Pane(root);
         Scene theScene = new Scene(pane, 400, 160, true);
         primaryStage.setScene(theScene);
@@ -69,10 +69,11 @@ public class GUI extends Application {
             } else if (keyCode == KeyCode.D) {
                 hero.moveRight();
             } else if (keyCode == KeyCode.SPACE) {
-                hero.jump();
+                    hero.jump();
+
             }
 
-    });
+        });
     }
 
     // Game loop
@@ -82,6 +83,11 @@ public class GUI extends Application {
             camera.update(l);
             graphicalEngine.render(l);
             physicalEngine.update(l);
+            if (physicalEngine.greenintersect) {
+                displayVictory();
+            }
+
+
         }
     };
 
@@ -97,6 +103,7 @@ public class GUI extends Application {
             // Display "GAME OVER!" and close the game after a second
             displayGameOver();
         }
+
     }
 
     // Display "GAME OVER!" and close the game after a second
@@ -111,6 +118,24 @@ public class GUI extends Application {
         pane.getChildren().add(gameOverLabel);
         gameOverLabel.setLayoutX(20);
         gameOverLabel.setLayoutY(20);
+
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            Stage stage = (Stage) pane.getScene().getWindow();
+            stage.close();
+        }));
+        timeline.play();
+    }
+
+    private void displayVictory() {
+        pane.getChildren().clear();
+
+        Label victoryLabel = new Label("VICTORY!");
+        victoryLabel.setFont(Font.font("Arial", FontWeight.BOLD, 36));
+        victoryLabel.setTextFill(Color.BLACK);
+
+        pane.getChildren().add(victoryLabel);
+        victoryLabel.setLayoutX(20);
+        victoryLabel.setLayoutY(20);
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             Stage stage = (Stage) pane.getScene().getWindow();

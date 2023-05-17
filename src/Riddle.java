@@ -148,7 +148,7 @@ public class Riddle extends VBox {
 
 
             // Close the riddle Pane after a delay
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(.5), event -> {
                 Stage stage = (Stage) getScene().getWindow();
                 stage.close();
             }));
@@ -168,7 +168,7 @@ public class Riddle extends VBox {
 
 
             // Close the riddle Pane after a delay
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), event -> {
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(.5), event -> {
                 Stage stage = (Stage) getScene().getWindow();
                 stage.close();
             }));
