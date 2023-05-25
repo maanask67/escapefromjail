@@ -15,3 +15,5 @@ Map: There are several stages in the Prison of Guantanamo. At every stage you mu
 
 The game will be top down and have limited vision.
 
+Extra info: Touching the red layer on the top of the game sticks you to the platform, making it impossible to reach the victory region (maybe).
+
