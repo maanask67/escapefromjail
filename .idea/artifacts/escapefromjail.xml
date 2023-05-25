@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="escapefromjail">
+    <output-path>$PROJECT_DIR$/out/artifacts/escapefromjail</output-path>
+    <root id="root">
+      <element id="archive" name="escapefromjail.jar">
+        <element id="module-output" name="escapefromjail" />
+      </element>
+    </root>
+  </artifact>
+</component>
