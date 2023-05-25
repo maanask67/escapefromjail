@@ -28,7 +28,7 @@ public class Riddle extends VBox {
 
     Label correctLabel = new Label("CORRECT!");
 
-    Label incorrectLabel = new Label("INCORRECT!");
+    Label incorrectLabel = new Label("INCORRECT! -10 seconds");
 
     Label timerLabel = new Label();
 
@@ -49,9 +49,9 @@ public class Riddle extends VBox {
         this.timerValueRef = timerValueRef;
 
         questionLabel.setText(question);
-        questionLabel.setFont(Font.font(24));
+        questionLabel.setFont(Font.font(20));
 
-        for (int i = 0; i < this.answer.length; i++) {
+        for (int i = 0; i < this.answer.length - 1; i++) {
             Label label = new Label();
             this.answerLabels.add(label);
             label.setText(answer[i]);

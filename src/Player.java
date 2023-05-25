@@ -22,6 +22,8 @@ public class Player {
         x += 15; // Move player to the right
     }
 
+    public void moveDown() { y += 30;}
+
     public void jump() {
         y -= 30;
 

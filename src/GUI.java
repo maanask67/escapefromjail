@@ -15,6 +15,13 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+
+import javax.print.attribute.standard.Media;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
+
 public class GUI extends Application {
     Maze maze = new Maze("./ressources/level1.txt");
     Player hero = new Player(200, 10);
@@ -41,12 +48,28 @@ public class GUI extends Application {
         Scene theScene = new Scene(pane, 400, 160, true);
         primaryStage.setScene(theScene);
 
-        String[] start = {"YES", "NO", "MAYBE", "BRUH"};
+       // String[] start = {"YES", "NO", "MAYBE", "BRUH"};
+        String audioFile = "./ressources/sticktalk.wav";
+        try {
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(new File(audioFile));
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+
+            // Play the audio
+            clip.start();
+
+            // Close the resources
+            audioStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
-        questionGroup.getChildren().add(new Riddle("Are you ready to start?", start, 0, timerValueRef));
+       // questionGroup.getChildren().add(new Riddle("Are you ready to start?", start, 0, timerValueRef));
         questionStage.setScene(questionScene);
         primaryStage.show();
+
+
 
         // Start the game loop
         unAutreJour.start();
@@ -56,6 +79,7 @@ public class GUI extends Application {
         timerLabel.setLayoutX(10);
         timerLabel.setLayoutY(10);
         timerLabel.setText("Timer: " + timerValueRef[0]);
+        timerLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
 
         // Create a timeline to update the timer every second
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateTimer()));
@@ -72,6 +96,9 @@ public class GUI extends Application {
                     hero.jump();
 
             }
+            else if (keyCode == KeyCode.SPACE) {
+                hero.moveDown();
+            }
 
         });
     }
@@ -87,7 +114,6 @@ public class GUI extends Application {
                 displayVictory();
             }
 
-
         }
     };
 
@@ -97,7 +123,7 @@ public class GUI extends Application {
         timerLabel.setText("Timer: " + timerValueRef[0]);
         timerLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
 
-        if (timerValueRef[0] == 0) {
+        if (timerValueRef[0] <= 0) {
             // Game over, stop the game loop
             unAutreJour.stop();
             // Display "GAME OVER!" and close the game after a second

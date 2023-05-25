@@ -1,0 +1,10 @@
+Are you enjoying the game?, YES, NO, MAYBE, BRUH, 0
+Who is the President of the U.S.?, OBAMA, BIDEN, LEBRON, TRUMP, 1
+When is Independence Day?, June 4th, July 4th, July 14th, May 5th, 1
+How old is Maanas rn?, 12, 20, 21, 19, 2
+How many people live in Paris?, 68mil, 2.1mil, 5mil, 10mil, 1
+What was the first capital of the U.S.?, New York, San Francsico, Chicago, Boston, 0
+What was New York's first name?, New Brunswick, New Amsterdam, Old York, 1
+What was the shortest reign in France's history?, 2 hours, 2 years, 20 minutes, 5 minutes, 2
+Which country can you marry a dead person in?, United States, France, 1
+How many pizzas do Americans eat yearly?, 1 billion, 3 billion, 5 billion, 7 billion, 1

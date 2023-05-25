@@ -25,8 +25,8 @@ public class Maze {
                     } else if (s.equals("E")) {
                         listOfTiles.add(new Tiles(column * 20, lines * 20, Color.GREEN));
                     }
-                    else if (s.equals("S")) {
-                        listOfTiles.add(new Tiles(column * 20, lines * 20, Color.ORANGE));
+                    else if (s.equals("R")) {
+                        listOfTiles.add(new Tiles(column * 20, lines * 20, Color.INDIANRED));
                     }
                     column++;
                 }
